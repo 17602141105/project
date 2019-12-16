@@ -1,0 +1,874 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="divport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        .flex {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+        }
+
+        .empty_custom_foot {
+            height: 4.8rem;
+        }
+
+        .foot-nav {
+            height: 4.8rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background: url('../images/di/dibu.png');
+            background-size: 110%;
+            background-position-x: center;
+            padding-top: 30px;
+            background-position-y: -4px;
+            z-index: 99999;
+        }
+
+        .nav_link {
+            flex: 1;
+            padding-top: 0.5rem;
+        }
+
+        .nav_link_in {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+            flex-direction: column;
+            color: #aaaaaa;
+            position: relative;
+        }
+
+        .post {
+            width: 3.7rem;
+            height: 3.7rem;
+        }
+
+        .post_ico {
+            position: relative;
+            top: -15px;
+            width: 3.7rem;
+            height: 3.7rem;
+        }
+
+        .txt {
+            line-height: 2.5rem;
+            text-align: center;
+        }
+
+        .current .txt {
+            color: #68ADE3;
+        }
+
+        .icon {
+            width: 17px;
+            height: 19px;
+            margin-left: 0.15rem;
+            font-size: 1rem;
+
+        }
+
+        .custom {
+            position: fixed;
+            overflow: hidden;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: #FFFFFF;
+            z-index: 999;
+        }
+
+        .empty_custom {
+            height: 4.4rem;
+            width: 100%;
+        }
+
+        .postion {
+            display: inline-block;
+            height: 4.4rem;
+            overflow: hidden;
+            margin-left: 1.7rem;
+        }
+
+        .province {
+            color: #333333;
+            font-size: 1.5rem;
+            font-weight: 400;
+            text-align: center;
+            line-height: 4.4rem;
+            display: inline-block;
+            margin-left: 0.6rem;
+            vertical-align: top;
+            max-width: 8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .postion img {
+            width: 1.3rem;
+            height: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .titles {
+            color: #333333;
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-align: center;
+            line-height: 4.4rem;
+            vertical-align: top;
+            float: right;
+            margin-right: 13rem
+        }
+
+        .title {
+            color: #333333;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 4.4rem;
+            vertical-align: top;
+        }
+
+        .my_icon {
+            width: 1.7rem;
+            height: 2rem;
+        }
+
+        .otitle {
+            clear: both;
+            margin: 0;
+            display: block;
+        }
+
+        .tabs {
+            float: left;
+            /*width: 33.3333%;*/
+            width: 50%;
+            text-align: center;
+            height: 4.4rem;
+            line-height: 4.4rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+        }
+
+        .topTabSwiper {
+            zoom: 1;
+            height: 4.4rem;
+            background: #FFFFFF;
+            position: relative;
+            padding: 0 4rem;
+        }
+
+        .notabs {
+            width: 10%;
+        }
+
+        .subtitle {
+            /*left: 4.8rem;*/
+            left: 9.8rem;
+            bottom: 0.4rem;
+            position: absolute;
+            width: 2.6rem;
+            height: 0.2rem;
+            background: #669AFF;
+            border-radius: 1px;
+            transform: 1s
+        }
+
+        .tabBorer {
+            font-weight: 500;
+            font-size: 1.8rem;
+        }
+
+        .custom_n {
+            height: 8.4rem;
+        }
+
+        .icons {
+            position: absolute;
+            right: 20px;
+            bottom: 8px;
+            width: 2.2rem;
+            height: 2.2rem;
+        }
+
+        #wrap .myMain {
+            background-image: url(../images/my2/tuoyuan_.png);
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        .myMain img {
+            padding-bottom: 6px;
+        }
+
+        .yl {
+            border: none !important;
+            background: linear-gradient(to right, rgba(102, 154, 255, 1), rgba(97, 231, 255, 1));
+        }
+
+        .icuoe {
+            width: 19px;
+            height: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" v-cloak>
+        <!--头部  -->
+        <div class="custom flex_center yl" id="header" v-if="headershow==0">
+            <!-- <div class="" >
+            <div class="postion" @click="openCity">
+                <img src='../images/di/dizhi.png'>
+                <div class="province">{{province}}</div>
+            </div>
+            <img src="../images/di/dizhia.png" class="icons" @click="openShan">
+            <div class="titles">找鱼</div>
+          </div> -->
+
+        </div>
+        <div class="custom" id="header" v-if="headershow==1" style="height: 52px">
+            <div class='topTabSwiper'>
+                <div class='tabs' :class="currentData==0?'tabBorer':''" tapmode="hover" @click='openNear(0)'>附近的人</div>
+                <div class='tabs' :class="currentData==1?'tabBorer':''" tapmode="hover" @click='openNear(1)'>邀约广场</div>
+                <div class="subtitle" v-if="currentData == 0"></div>
+                <div class="subtitle" style='left:25rem' v-if="currentData == 1"></div>
+            </div>
+        </div>
+        <div class="custom flex_center" id="header" v-if="headershow==3" style="height: 52px">
+            <div class="title otitle">消息</div>
+        </div>
+
+        <div class="custom flex_center myMain" id="header" style="vertical-align: middle; " v-if="headershow==4" style="height: 52px">
+            <div class="title otitle" style="color:#fff; align:center;text-align:center;">我的 test <img src="../images/my2/shezi.png" style="" class="icons" @click="Set"></div>
+        </div>
+
+
+
+
+        <!--底部  -->
+        <div class="foot-nav flex" id="footer">
+            <div class='nav_link' v-for="(item,index) in listInfo" :key="index" tapmode="hover" @click="chooseImg(index,0,$event)">
+                <div class="nav_link_in" :class="curIdx[index] ? 'current' :'' ">
+                    <div v-if="item.style==0">
+                        <img :class="index == 3?'icuoe':'icon'" :class="item.fn=='gMy'?'my_icon':''" :src="item.imgUrl" v-if="!curIdx[index]" id="qimg" />
+                        <img :class="index == 3?'icuoe':'icon'" :class="item.fn=='gMy'?'my_icon':''" v-if='curIdx[index]' :src="item.curUrl" id="qimg" />
+                        <div id="sou"></div>
+                        <div class="txt">{{item.title}}</div>
+                    </div>
+                    <div class="post" v-if="item.style==1">
+                        <img src='../images/di/yu.png' class="post_ico" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
+<script type="text/javascript" src="../script/fastclick.js"></script>
+<script type="text/javascript" src="../script/sha1.min.js"></script>
+<script type="text/javascript" src="../script/svga.min.js"></script>
+<script type="text/javascript" src="../script/public.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#wrap",
+        data: {
+            Distance: '',
+            MinAge: '',
+            MaxAge: '',
+            isShow: false,
+            Gender: '',
+            MinHeight: '',
+            MaxHeight: '',
+            MinWeight: '',
+            MaxWeight: '',
+            CityName: '',
+            type: false,
+            province: '北京市',
+            listInfo: [{
+                title: '首页',
+                imgUrl: '../images/di/shouye.png',
+                curUrl: '../images/di/shouye_1.png',
+                style: 0,
+            }, {
+                title: '附近',
+                imgUrl: '../images/di/dizhi.png',
+                curUrl: '../images/di/tuo.png',
+                style: 0,
+            }, {
+                title: '',
+                imgUrl: '../images/di/yu.png',
+                curUrl: '../images/di/yu.png',
+                style: 1,
+            }, {
+                title: '消息',
+                imgUrl: '../images/di/li.png',
+                curUrl: '../images/di/yuan2.png',
+                style: 0,
+            }, {
+                title: '我的',
+                imgUrl: '../images/di/xiao.png',
+                curUrl: '../images/di/kao2.png',
+                style: 0,
+                fn: 'gMy'
+            }, ],
+            curIdx: [true, false, false, false, false],
+            headershow: 0,
+            currentData: 0,
+            isTourist: ''
+        },
+        mounted() {
+
+        },
+        methods: {
+            Set() { //跳转设置
+                api.openWin({
+                    name: 'Set',
+                    url: './new/my_set.html',
+                    pageParam: {
+                        name: 'test'
+                    }
+                });
+
+            },
+            openCity() {
+                api.openWin({
+                    name: 'city',
+                    url: './news/citylist.html',
+                    pageParam: {
+                        address: vm.province
+                    }
+                });
+            },
+            openShan() {
+                api.openWin({
+                    name: 'screen',
+                    slidBackEnabled: false,
+                    url: './news/screen.html',
+                    pageParam: {
+                        Distance: vm.Distance / 1000,
+                        MinAge: vm.MinAge,
+                        MaxAge: vm.MaxAge,
+                        Gender: vm.Gender,
+                        minStature: vm.MinHeight,
+                        maxStature: vm.MaxHeight,
+                        minWeight: vm.MinWeight,
+                        maxWeight: vm.MaxWeight
+                    }
+                });
+            },
+             chooseImg(index, num,e) {
+               if (index !=2) {
+                 if (e) {
+                   let dom = $api.dom(e.currentTarget, '#qimg')
+                   alphaPlay(dom,"show")
+                 }
+               }
+
+                if (index == 0) {
+                    if (this.curIdx[0]) {
+                        return false;
+                    } else {
+                        this.curIdx = this.curIdx.map(function() {
+                            return false;
+                        });
+                        this.curIdx[0] = true;
+                        this.headershow = 0;
+                        hideAllFrame();
+                        api.execScript({
+                            name: 'main',
+                            frameName: 'home',
+                            script: 'reonload();'
+                        });
+                        api.openFrame({
+                            name: 'home',
+                            url: './home/home.html',
+                            rect: {
+                                x: 0,
+                                y: 25,
+                                w: 'auto',
+                                h: api.winHeight - vm.footerH - 25
+                            },
+                            pageParam: {},
+                            animation:{
+                              type:'fade',
+                              duration:300
+                            },
+                            bounces: false,
+                            vScrollBarEnabled: true,
+                            hScrollBarEnabled: true
+                        });
+                    }
+                    api.sendEvent({
+                        name: 'home_h_DaKai',
+                        extra: {
+                            isKai: true
+                        }
+                    });
+
+                } else if (index == 1) {
+                    if (!num) {
+                        num = 0
+                    }
+                    if (this.curIdx[1]) {
+                        return false
+                    } else {
+                        this.curIdx = this.curIdx.map(function() {
+                            return false;
+                        });
+                        this.curIdx[1] = true;
+                        this.headershow = 1;
+                        hideAllFrame();
+                        api.openFrameGroup({
+                            name: 'nearby',
+                            background: '#fff',
+                            scrollEnabled: vm.type,
+                            rect: {
+                                x: 0,
+                                y: vm.headerH,
+                                w: 'auto',
+                                h: api.winHeight - vm.headerH - vm.footerH
+                            },
+                            index: num,
+                            frames: [{
+                                name: 'nearby',
+                                url: './nearby/nearby.html',
+                                customRefreshHeader: 'UIPullRefreshFlash',
+                                bgColor: '#fff',
+                                bounces: true,
+                                pageParam: {
+
+                                },
+                            }, {
+                                name: 'nearbyground',
+                                url: './nearby/nearbyground.html',
+                                customRefreshHeader: 'UIPullRefreshFlash',
+                                bgColor: '#fff',
+                                bounces: true,
+                                pageParam: {
+                                },
+                            }]
+                        }, function(ret, err) {
+                            if (ret) {
+                                vm.currentData = ret.index
+                            } else {
+
+                            }
+                        });
+                    }
+
+                } else if (index == 2) {
+                    this.curIdx = this.curIdx.map(function() {
+                        return false;
+                    });
+                    this.curIdx[2] = true;
+                    // hideAllFrame();
+                    api.openFrame({
+                        name: 'post',
+                        url: './post/post.html',
+                        pageParam: {
+                            name: 'test'
+                        },
+                        animation:{
+                          type:'fade',
+                          duration:300
+                        },
+                        bounces: false,
+                        bgColor: 'rgba(0,0,0,0.5)',
+                    });
+                } else if (index == 3) {
+
+                    if (vm.isTourist == 1) {
+                        api.openWin({
+                            name: 'login',
+                            url: './login/logintype.html',
+                            animation:{
+                              type:'fade',
+                              duration:300
+                            },
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                    } else {
+                        if (this.curIdx[3]) {
+                            return false
+                        } else {
+                            this.curIdx = this.curIdx.map(function() {
+                                return false;
+                            });
+                            this.curIdx[3] = true;
+                            this.headershow = 3;
+                            hideAllFrame();
+                            api.execScript({
+                                name: 'main',
+                                frameName: 'news',
+                                script: 'onLoad();'
+                            });
+                            api.execScript({
+                                name: 'main',
+                                frameName: 'news',
+                                script: 'fnRongInit();'
+                            });
+                            api.openFrame({
+                                name: 'news',
+                                url: './news/news.html',
+                                rect: {
+                                    x: 0,
+                                    y: vm.headerH,
+                                    w: 'auto',
+                                    h: api.winHeight - vm.headerH - vm.footerH
+
+                                },
+                                animation:{
+                                  type:'fade',
+                                  duration:300
+                                },
+                                pageParam: {},
+                                bounces: false,
+                                bgColor: 'rgba(0,0,0,0)',
+                                vScrollBarEnabled: true,
+                                hScrollBarEnabled: true
+                            });
+                        }
+                    }
+                } else if (index == 4) {
+                    if (this.curIdx[4]) {
+                        return false
+                    } else {
+                        this.curIdx = this.curIdx.map(function() {
+                            return false;
+                        });
+                        this.curIdx[4] = true;
+                        this.headershow = 4;
+                        hideAllFrame();
+                        api.execScript({
+                            name: 'main',
+                            frameName: 'my',
+                            script: 'onLoad();'
+                        });
+                        api.openFrame({
+                            name: 'my',
+                            url: './my/my.html',
+                            rect: {
+                                x: 0,
+                                y: vm.headerH,
+                                w: 'auto',
+                                h: api.winHeight - vm.headerH - vm.footerH
+
+                            },
+                            animation:{
+                              type:'fade',
+                              duration:300
+                            },
+                            pageParam: {
+                                name: 'test'
+                            },
+                            bounces: false,
+                            bgColor: 'rgba(0,0,0,0)',
+                            vScrollBarEnabled: true,
+                            hScrollBarEnabled: true
+                        });
+                    }
+                }
+            },
+            openNear(index) {
+
+                vm.currentData = index;
+                api.setFrameGroupIndex({
+                    name: 'nearby',
+                    index: index
+                });
+            },
+        }
+    })
+
+    apiready = function() {
+        if ($api.getStorage('Tourist')) {
+            vm.isTourist = 1
+        }
+        if ($api.getStorage('Gender') == 0||$api.getStorage('Gender') == undefined||$api.getStorage('Gender') == "") {
+          var param = {
+               "UserId": $api.getStorage('UserId')
+           }
+            tips("您还没有设置性别喔，请重新登录~")
+           fnTokenAjax('/user/signout', param, 'post', (ret, err) => {
+            console.log("退出登录");
+           })
+           $api.clearStorage();
+           api.rebootApp();
+        }
+        // ios提前打开地图定位
+        oplaPermission()
+        var header = $api.byId('header');
+        var footer = $api.byId('footer');
+        $api.fixStatusBar(header);
+        $api.fixTabBar(footer);
+        var headerH = header.offsetHeight;
+        var footerH = footer.offsetHeight;
+        vm.headerH = headerH;
+        vm.footerH = footerH;
+        var system = api.systemType
+        if (system == 'android') {
+            vm.headerH = 68
+            vm.type = false
+        } else {
+            vm.headerH = 70
+            vm.type = true
+        }
+        hideAllFrame();
+        api.openFrame({
+            name: 'home',
+            url: './home/home.html',
+            rect: {
+                x: 0,
+                y: 25,
+                w: 'auto',
+                h: api.winHeight - vm.footerH - 25
+            },
+            pageParam: {
+                CityName: vm.CityName
+            },
+            bounces: false,
+            bgColor: 'rgba(0,0,0,0)'
+        });
+        keyListen()
+     if (!$api.getStorage('new')) {
+
+            api.openFrame({
+                name: 'perfect',
+                url: './dialogs/perfect.html',
+                pageParam: {
+                    name: 'test'
+                },
+                bounces: false,
+            });
+    }
+
+		var uri=location.href;
+		console.log(uri);
+		var ofuri=uri.indexOf('tz')
+		console.log(ofuri);
+		if(ofuri > -1){
+			vm.curIdx = vm.curIdx.map(function() {
+			    return false;
+			});
+			vm.curIdx[4] = true;
+			vm.headershow = 4;
+			hideAllFrame();
+			// api.execScript({
+			//     name: 'main',
+			//     frameName: 'my',
+			//     script: 'onLoad();'
+			// });
+			api.openFrame({
+			    name: 'my',
+			    url: './my/my.html',
+			    rect: {
+			        x: 0,
+			        y: vm.headerH,
+			        w: 'auto',
+			        h: api.winHeight - vm.headerH - vm.footerH
+
+			    },
+			    pageParam: {
+			        name: 'test'
+			    },
+			    bounces: false,
+			    // bgColor: 'rgba(0,0,0,0)',
+			    vScrollBarEnabled: true,
+			    hScrollBarEnabled: true
+			});
+		}
+
+
+
+    };
+    //  隐藏所有frame
+    function hideAllFrame() {
+        api.setFrameAttr({
+            name: 'home_h',
+            hidden: true
+        });
+        api.setFrameAttr({
+            name: 'home',
+            hidden: true
+        });
+        api.setFrameAttr({
+            name: 'news',
+            hidden: true
+        });
+        api.setFrameAttr({
+            name: 'my',
+            hidden: true
+        })
+        api.setFrameAttr({
+            name: 'givereward',
+            hidden: true
+        })
+        api.setFrameGroupAttr({
+            name: 'nearby',
+            hidden: true
+        });
+    }
+    // 筛选
+    function reAddress(data) {
+        vm.province = data
+    }
+
+
+
+    // 附近frame
+    function openneary() {
+        api.setFrameAttr({
+            name: 'home_h',
+            hidden: true
+        });
+        let qd = 1
+        vm.chooseImg(1, qd);
+
+        api.setFrameGroupIndex({
+            name: 'nearby',
+            index: 1
+        });
+    }
+
+    function oplaPermission() {
+        var resultList = api.hasPermission({
+            list: ['location']
+        });
+        if (!resultList[0].granted) {
+            api.requestPermission({
+                list: ['location'],
+                code: 1
+            }, function(ret, err) {
+                //  console.log(JSON.stringify(ret));
+                if (!ret.list[0].granted) {
+                    vm.province = '定位失败'
+                } else {
+                    var aMap = api.require('aMap');
+                    aMap.open({
+                        showUserLocation: true,
+                        zoomLevel: 11,
+                        rect: {
+                            x: -9999,
+                            y: -9999,
+                            w: 0,
+                            h: 0
+                        },
+                        center: {
+                            lon: 116.4021310000,
+                            lat: 39.9994480000
+                        },
+                        fixedOn: api.frameName,
+                        fixed: true
+                    }, function(ret, err) {
+                        if (ret.status) {
+                            aMap.getLocation(function(ret, err) {
+                                if (ret.status) {
+
+                                    aMap.getNameFromCoords({
+                                        lon: ret.lon,
+                                        lat: ret.lat
+                                    }, function(ret, err) {
+                                        //console.log(JSON.stringify(ret))
+                                        if (ret.status) {
+                                            api.sendEvent({
+                                                name: 'citylist_frame',
+                                                extra: {
+                                                    city: ret.city
+                                                }
+                                            });
+                                            $api.setStorage('city', ret.city);
+                                            vm.province = ret.city
+                                            vm.CityName = ret.CityName
+                                            vm.city = ret.district
+                                        } else {
+                                            // alert(JSON.stringify(err));
+                                            vm.province = '定位失败'
+                                        }
+                                    });
+                                } else {
+                                    vm.province = '定位失败'
+                                }
+                            });
+                        } else {}
+                    });
+                }
+            });
+        } else {
+            var aMap = api.require('aMap');
+            aMap.open({
+                showUserLocation: true,
+                zoomLevel: 11,
+                rect: {
+                    x: -9999,
+                    y: -9999,
+                    w: 0,
+                    h: 0
+                },
+                center: {
+                    lon: 116.4021310000,
+                    lat: 39.9994480000
+                },
+                fixedOn: api.frameName,
+                fixed: true
+            }, function(ret, err) {
+                if (ret.status) {
+                    aMap.getLocation(function(ret, err) {
+                        // console.log(JSON.stringify(ret))
+                        if (ret.status) {
+                            aMap.getNameFromCoords({
+                                lon: ret.lon,
+                                lat: ret.lat
+                            }, function(ret, err) {
+                                //  console.log(JSON.stringify(ret));
+                                if (ret.status) {
+
+                                    api.sendEvent({
+                                        name: 'citylist_frame',
+                                        extra: {
+                                            city: ret.city
+                                        }
+                                    });
+                                    $api.setStorage('city', ret.city)
+                                    vm.province = ret.city
+                                    vm.CityName = ret.CityName
+                                    vm.city = ret.district
+                                } else {
+                                    // alert(JSON.stringify(err));
+                                    vm.province = '定位失败'
+                                }
+                            });
+                        } else {
+                            vm.province = '定位失败'
+                        }
+                    });
+                } else {}
+            });
+        }
+    }
+
+function fnIndex(){
+
+	vm.chooseImg(4)
+}
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP1</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+</head>
+
+<body>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/vue.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+        api.setStatusBarStyle({
+            style: 'dark',
+            color: 'transparent'
+        });
+
+
+        getLoca()
+        appLoaction()
+        fnJpushListener()
+        listenOffline()
+        fnMam() //热跟新，和云修复方法
+        $api.setStorage('cellnum', 0) //app统计
+            //  console.log($api.getStorage('UserId'))
+        if (!$api.getStorage('UserId')) {
+            $api.setStorage('Tourist', 1) //游客
+            api.openWin({
+                name: 'login',
+                url: './html/login/logintype.html',
+                slidBackEnabled: false,
+                pageParam: {
+                    name: ''
+                }
+            });
+        } else {
+            api.openWin({
+                name: 'main',
+                url: './html/main.html',
+                // url:'./html/new/my_set_fram.html',
+                slidBackEnabled: false,
+                scrollToTop: true,
+
+            });
+            var param = {
+                    "UserId": $api.getStorage('UserId')
+                }
+                //selName('/statistics/appstartupnumber', param)
+        }
+
+    };
+
+    // 定时更换融云ID
+    function reportcurrentlocation(data) {
+        // console.log(JSON.stringify(data))
+        // console.log($api.getStorage('lat'))
+        $api.setStorage('RongCloudToken', data.status_message)
+    }
+    //  极光ID
+    var RegistrationId
+
+    function appLoaction() {
+        var ajpush = api.require('ajpush');
+        ajpush.getRegistrationId(function(ret) {
+            RegistrationId = ret.id
+        });
+
+        ajpush.setListener(
+            function(ret) {
+                var id = ret.id;
+                var title = ret.title;
+                var content = ret.content;
+                var extra = ret.extra;
+            }
+        );
+
+
+        getLoca()
+        var body_ = {
+            "UserId": $api.getStorage('UserId'),
+            "Longitude": $api.getStorage('lon'),
+            "Latitude": $api.getStorage('lat'),
+            "RegistrationId": RegistrationId
+        }
+        if ($api.getStorage('lon') == 0 || $api.getStorage('lat') == 0 || !$api.getStorage('lon') || !$api.getStorage('lat')) {
+
+        } else {
+            fnTokenAjax('/common/reportcurrentlocation', body_, 'post', reportcurrentlocation)
+        }
+        setTimeout(appLoaction, 30000);
+    }
+    // 网络监听
+    function listenOffline() {
+        api.addEventListener({
+            name: 'offline'
+        }, function(ret, err) {
+            alert('网络好像走神了，重新连接一下吧');
+        });
+    }
+
+
+
+    // 监听消息推送
+    function fnJpushListener() {
+        var system = api.systemType
+        if (system == 'android') {
+            api.addEventListener({
+                name: 'appintent'
+            }, function(ret, err) {
+                if (ret && ret.appParam.ajpush) {
+                    var ajpush = ret.appParam.ajpush;
+                    var id = ajpush.id;
+                    var title = ajpush.title;
+                    var content = ajpush.content;
+                    var extra = ajpush.extra;
+                    if (extra.type == 2) {
+                        api.openWin({
+                            name: 'dateagreed',
+                            url: './html/datedetail/datedetail.html',
+                            pageParam: {
+                                name: 'agreed',
+                                Id: extra.dataid
+                            }
+                        });
+                    } else {
+                        api.openWin({
+                            name: 'notice',
+                            url: './html/news/notice.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                    }
+                }
+            })
+        } else {
+            api.addEventListener({
+                name: 'noticeclicked'
+            }, function(ret, err) {
+                if (ret && ret.value) {
+                    var ajpush = ret.value;
+                    var content = ajpush.content;
+                    var extra = ajpush.extra;
+                    if (extra.type == 2) {
+                        api.openWin({
+                            name: 'dateagreed',
+                            url: './html/datedetail/datedetail.html',
+                            pageParam: {
+                                name: 'agreed',
+                                Id: extra.dataid
+                            }
+                        });
+                    } else {
+                        api.openWin({
+                            name: 'notice',
+                            url: './html/news/notice.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+    function fnMam() {
+        //云修复使用静默修复时，更新完毕事件。可通过监听此事件来通知用户做是否强制重启应用等操作或者提示，以使更新生效，字符串类型
+        api.addEventListener({
+            name: 'smartupdatefinish'
+        }, function(ret, err) {
+          alert(JSON.stringify(ret.value[0].extra)+"云修复！")
+            api.openWidget({
+                animation: {
+                    type: 'push',
+                    subType: 'from_bottom',
+                    duration: 500
+                }
+            }, function(ret, err) {
+                if (ret) {
+                  alert(JSON.stringify(ret))
+                  console.log(JSON.stringify(ret));
+                }
+            });
+        });
+        var mam = api.require('mam');
+        mam.checkUpdate(function(ret, err) {
+            if (ret) {
+                //alert(JSON.stringify(ret))
+                console.log(JSON.stringify(ret));
+            }
+        });
+    }
+</script>
+
+</html>
